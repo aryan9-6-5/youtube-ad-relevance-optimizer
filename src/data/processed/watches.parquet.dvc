@@ -1,0 +1,5 @@
+outs:
+- md5: 8615e2b3703b9f22568977b5090defb0
+  size: 232881
+  hash: md5
+  path: watches.parquet

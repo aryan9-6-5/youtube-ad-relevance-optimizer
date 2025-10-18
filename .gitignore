@@ -208,3 +208,25 @@ __marimo__/
 
 # API keys and sensitive configuration
 config/api_keys.yaml
+
+# Data files (regenerable from simulation scripts)
+data/external/*.parquet
+data/processed/*.parquet
+data/processed/*.csv
+data/raw/
+
+# Reports and figures (regenerable)
+src/reports/
+reports/
+
+# Python cache
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Virtual environment
+venv/
+.env
+
+# Test outputs
+tests/__pycache__/
