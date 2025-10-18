@@ -11,3 +11,7 @@ duckdb==0.10.2  # Lightweight SQL for prototyping
 prometheus-client==0.20.0  # Basic monitoring
 evidently==0.4.7  # Drift detection
 optuna==3.6.0  # Optional hyperparam tuning
+protobuf==4.24.4
+pip install google-api-python-client==2.15.0
+faker==37.11.0
+seaborn==0.13.2
