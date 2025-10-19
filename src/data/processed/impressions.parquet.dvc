@@ -1,5 +1,0 @@
-outs:
-- md5: ee07729b093f4ccc771c405be9dc1c51
-  size: 84716
-  hash: md5
-  path: impressions.parquet

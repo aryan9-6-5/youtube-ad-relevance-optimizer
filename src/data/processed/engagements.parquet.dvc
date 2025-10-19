@@ -1,5 +1,0 @@
-outs:
-- md5: 76037531840d2d447293db903d62be86
-  size: 96685
-  hash: md5
-  path: engagements.parquet

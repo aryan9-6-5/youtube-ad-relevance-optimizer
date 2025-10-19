@@ -381,7 +381,7 @@ def main():
     print("="*60)
     
     # Load real video data
-    video_path = Path(__file__).resolve().parent.parent.parent / "data" / "external" / "real_videos.parquet"
+    video_path = Path(__file__).parent / 'external'
     if not video_path.exists():
         print("❌ Real video data not found. Run fetch_youtube_videos.py first!")
         return
@@ -402,7 +402,7 @@ def main():
     engagements = sim.generate_engagements(impressions, users)
     
     # Save outputs
-    output_dir = Path("../data/processed")
+    output_dir =Path(__file__).parent / 'processed'
     output_dir.mkdir(parents=True, exist_ok=True)
     
     print(f"\n💾 Saving datasets to {output_dir}/...")

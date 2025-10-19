@@ -389,9 +389,10 @@ class DataValidator:
 
 def main():
     """Run validation pipeline"""
-    
-    data_dir = Path("../data/processed")
-    
+    report_dir = Path(__file__).parent.parent / 'reports'
+    Path('../reports').mkdir(exist_ok=True)
+    data_dir = Path(__file__).parent / 'processed'
+    report_path = report_dir / 'validation_report.txt'
     if not data_dir.exists():
         print(" No processed data found. Run simulate_realistic_behavior.py first!")
         return
@@ -403,9 +404,8 @@ def main():
     validator.validate_all()
     
     # Generate report
-    report_path = "../reports/data_validation_report_real.txt"
-    Path('../reports').mkdir(exist_ok=True)
     validator.generate_report(report_path)
+    report_path.parent.mkdir(parents=True, exist_ok=True)
     
     # Generate plots
     validator.plot_diagnostics()

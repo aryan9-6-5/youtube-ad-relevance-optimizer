@@ -6,7 +6,7 @@ from pathlib import Path
 import yaml               # Also ensure you are importing yaml
 
 # Load API key
-config_path = Path(__file__).resolve().parent.parent.parent / 'config' / 'api_keys.yaml'
+config_path = Path(__file__).parent.parent / 'config' / 'api_keys.yaml'
 with open(config_path) as f:
     config = yaml.safe_load(f)
 API_KEY = config['youtube']['api_key']
@@ -78,7 +78,10 @@ if __name__ == "__main__":
         print(f"Fetched {len(cat_videos)} {cat} videos")
 
     # Save
-    os.makedirs("../../data/external", exist_ok=True)
-    all_videos.to_parquet("../../data/external/real_videos.parquet", index=False)
-    print(f"Total: {len(all_videos)} videos saved to /data/external/")
+    output_dir = Path(__file__).parent.parent / 'data' / 'external' / 'real_videos.parquet'
+    output_dir.mkdir(parents=True, exist_ok=True)
+    output_path = output_dir / 'real_videos.parquet'
+    all_videos.to_parquet(output_path, index=False)
+
+    print(f"Total: {len(all_videos)} videos saved to {output_path}")
     print(f"Quota tip: ~{len(CATEGORIES)} calls = {NUM_VIDEOS / 10} units used.")
