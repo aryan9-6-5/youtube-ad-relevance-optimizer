@@ -229,4 +229,16 @@ venv/
 .env
 
 # Test outputs
-tests/__pycache__/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+airflow.db/
+airflow/logs/
+data/processed/
+data/db/
+data/reports/
+*.db
+
