@@ -242,7 +242,7 @@ class DataValidator:
         
         print()
     
-    def generate_report(self, output_path='validation_report.txt'):
+    def generate_report(self, output_path = 'report/validation_report.txt'):
         """Generate a text report of all validations"""
         import sys
         from io import StringIO
@@ -264,7 +264,7 @@ class DataValidator:
         print(f" Report saved to {output_path}")
         return report
     
-    def plot_diagnostics(self, output_dir='../reports/figures/real/'):
+    def plot_diagnostics(self, output_dir = Path("/opt/airflow/data/reports/figures/real")):
         """Generate diagnostic plots"""
         output_dir = Path(output_dir)
         output_dir.mkdir(parents=True, exist_ok=True)
@@ -389,8 +389,8 @@ class DataValidator:
 
 def main():
     """Run validation pipeline"""
-    report_dir = Path(__file__).parent.parent / 'reports'
-    Path('../reports').mkdir(exist_ok=True)
+    report_dir = Path("/opt/airflow/data/reports")
+    Path('/opt/airflow/data/reports').mkdir(exist_ok=True)
     data_dir = Path(__file__).parent / 'processed'
     report_path = report_dir / 'validation_report.txt'
     if not data_dir.exists():
@@ -404,8 +404,9 @@ def main():
     validator.validate_all()
     
     # Generate report
-    validator.generate_report(report_path)
     report_path.parent.mkdir(parents=True, exist_ok=True)
+    validator.generate_report(report_path)
+    
     
     # Generate plots
     validator.plot_diagnostics()

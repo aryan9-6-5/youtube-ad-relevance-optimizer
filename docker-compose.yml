@@ -1,0 +1,64 @@
+services:
+  airflow:
+    build:
+      context: .
+      dockerfile: Dockerfile.airflow
+    container_name: youtube-ad-relevance-optimizer-airflow-1
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=SequentialExecutor
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=sqlite:////opt/airflow/db/airflow.db
+      - AIRFLOW__CORE__FERNET_KEY=zCt-w_q24PYDpxfoIgGf4Bw7NSUQeahY33oR0xzEj9Y=
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./airflow/logs:/opt/airflow/logs
+      - ./data:/opt/airflow/data
+      - ./data/reports:/opt/airflow/data/reports
+      - ./airflow/db:/opt/airflow/db
+      - ./config:/opt/airflow/config
+    ports:
+      - "8080:8080"
+    command: >
+      bash -c "airflow db init &&
+               airflow users create --username admin --firstname Admin --lastname User --role Admin --email your.email@example.com --password admin &&
+               airflow webserver -p 8080"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+  scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile.airflow
+    container_name: youtube-ad-relevance-optimizer-scheduler-1
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=SequentialExecutor
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=sqlite:////opt/airflow/db/airflow.db
+      - AIRFLOW__CORE__FERNET_KEY=zCt-w_q24PYDpxfoIgGf4Bw7NSUQeahY33oR0xzEj9Y=
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./airflow/logs:/opt/airflow/logs
+      - ./data:/opt/airflow/data
+      - ./data/reports:/opt/airflow/data/reports
+      - ./airflow/db:/opt/airflow/db
+      - ./scheduler_start.sh:/scheduler_start.sh
+      - ./config:/opt/airflow/config
+    command: bash /scheduler_start.sh
+    depends_on:
+      airflow:
+        condition: service_healthy
+  fastapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: youtube-ad-relevance-optimizer-fastapi-1
+    volumes:
+      - ./src:/app/src
+      - ./data:/app/data
+    ports:
+      - "8000:8000"
+    command: uvicorn src.pipelines.main:app --host 0.0.0.0 --port 8000
+volumes:
+  airflow_db:

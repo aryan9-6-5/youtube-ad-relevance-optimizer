@@ -1,0 +1,12 @@
+apache-airflow==2.9.3
+faker
+pandas
+duckdb
+google-api-python-client
+pyyaml
+dvc
+setuptools==80.9.0
+scipy
+matplotlib
+numpy
+seaborn

@@ -1,6 +1,11 @@
 venv/
 __pycache__/
 *.pyc
-data/raw/
-models/trained/
-.git/
+*.pyo
+*.pyd
+.pytest_cache/
+airflow.db/
+airflow/logs/
+data/processed/
+data/db/
+data/reports/
